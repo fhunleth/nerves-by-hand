@@ -5,16 +5,21 @@ defmodule Demo.Application do
 
   use Application
 
+  require Logger
+
   @impl true
   def start(_type, _args) do
     children = [
-      # Starts a worker by calling: Demo.Worker.start_link(arg)
-      # {Demo.Worker, arg}
+      {Task, &repeat/0}
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Demo.Supervisor]
+    opts = [strategy: :one_for_one, name: Hello.Supervisor]
     Supervisor.start_link(children, opts)
+  end
+
+  defp repeat(count \\ 0) do
+    Logger.info("Hello number #{count}")
+    Process.sleep(2000)
+    repeat(count + 1)
   end
 end
