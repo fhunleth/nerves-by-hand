@@ -1,0 +1,21 @@
+#!/bin/sh
+
+APPDIR=$(find /opt -mindepth 1 -maxdepth 1 -type d | head -n 1)
+
+[ -n "$APPDIR" ] || exit 0
+
+APP="$APPDIR/bin/$(basename "$APPDIR")"
+
+case "$1" in
+    start)
+        echo "Starting $(basename "$APPDIR")"
+        RELEASE_TMP=/tmp "$APP" daemon
+        ;;
+    stop)
+        "$APP" stop
+        ;;
+    restart)
+        "$APP" restart
+        ;;
+esac
+

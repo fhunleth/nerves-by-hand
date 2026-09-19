@@ -1,0 +1,4 @@
+[submodule "buildroot"]
+	path = base_image/buildroot
+	url = https://gitlab.com/buildroot.org/buildroot.git
+

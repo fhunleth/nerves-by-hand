@@ -1,0 +1,6 @@
+menu "Building Nerves by Hand"
+
+source "$BR2_EXTERNAL_NERVES_BY_HAND_PATH/package/nerves-erlang/Config.in"
+
+endmenu
+

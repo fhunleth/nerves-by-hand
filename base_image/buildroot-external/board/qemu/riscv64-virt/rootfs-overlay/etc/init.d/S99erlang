@@ -1,0 +1,27 @@
+#!/bin/sh
+
+APP="/opt/demo/bin/demo"
+[ -e "$APP" ] || exit 0
+
+# Log to /tmp since it's always writable
+export RELEASE_TMP=/tmp
+
+# Quiet Elixir's latin1 locale warning
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+case "$1" in
+    start)
+        echo "Running '$APP daemon'"
+        "$APP" daemon
+        ;;
+    stop)
+        echo "Running '$APP stop'"
+        "$APP" stop
+        ;;
+    restart)
+        echo "Running '$APP restart'"
+        "$APP" restart
+        ;;
+esac
+

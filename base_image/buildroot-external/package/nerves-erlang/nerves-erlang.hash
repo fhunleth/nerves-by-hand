@@ -1,0 +1,5 @@
+# From https://github.com/erlang/otp/releases/download/OTP-29.0.6/SHA256.txt
+sha256  36c89ffdac9d7531c19be0cee34355b167ea95188625d32bee61ebf49ac82afa  otp_src_29.0.6.tar.gz
+
+# Hash for license file
+sha256  809fa1ed21450f59827d1e9aec720bbc4b687434fa22283c6cb5dd82a47ab9c0  LICENSE.txt
