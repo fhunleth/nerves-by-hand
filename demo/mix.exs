@@ -31,8 +31,36 @@ defmodule Demo.MixProject do
   defp releases do
     [
       demo: [
-        include_erts: false
+        include_erts: false,
+        steps: [:assemble, &create_rootfs/1]
       ]
     ]
+  end
+
+  defp create_rootfs(release) do
+    base_tar = Path.expand("../base_image/output/images/rootfs.tar", __DIR__)
+
+    name = release.name
+    output = Path.dirname(release.path)
+    combined = Path.join(output, "#{name}.tar")
+    rootfs_path = Path.join(output, "#{name}.squashfs")
+
+    File.cp!(base_tar, combined)
+    shell!(output, "#{tar()} -r -f  #{combined} --transform=s,^#{name},opt/#{name}, #{name}")
+    shell!(output, "sqfstar -force #{rootfs_path} < #{combined}")
+
+    release
+  end
+
+  defp tar() do
+    case :os.type() do
+      {:unix, :darwin} -> "gtar"
+      _ -> "tar"
+    end
+  end
+
+  defp shell!(dir, cmd) do
+    IO.puts(cmd)
+    {_, 0} = System.shell(cmd, cd: dir, stderr_to_stdout: true)
   end
 end
